@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Parts Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: white;
+        }
+        h1 {
+            margin-top: 150px; /* Sesuaikan dengan tinggi navbar */
+            text-align: center;
+            font-size: 2rem;
+            font-family: 'Michroma', sans-serif;
+        }
+        p {
+            font-size: 18px;
+            text-align: center;
+            color:#e5e5e5;
+        }
+        .hero {
+            background: url('img/herochery.png') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            padding-top: 500px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+        .hero p {
+            font-size: 1.5rem;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .hero {
+                height: 300px;
+                padding: 15px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                height: 250px;
+                padding: 10px;
+            }
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        .cta-button {
+            background-color: #e9001a;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 20px;
+        }
+        .feature {
+            text-align: center;
+        }
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: black;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            height: 70px;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* Logo styling */
+        .logo {
+            height: 30px;
+            transition: transform 0.3s;
+            margin-left: 100px;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation styling */
+        nav {
+            display: flex;
+            gap: 20px;
+            padding-right: 100px;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            color: #e9001a;
+            transform: scale(1.1);
+        }
+
+        /* Menu toggle untuk mobile */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background: black;
+                width: 200px;
+                padding: 10px;
+            }
+            nav.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+                margin-right: 100px;
+            }
+        }
+
+        .top-sellers {
+            text-align: center;
+            background-color: black;
+            color: white;
+            justify-content: center;
+            height: 600px;
+        }
+
+        .top-sellers h2{
+            font-size: 40px;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            scroll-snap-type: x mandatory;
+            gap: 30px;
+            padding: 20px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .carousel-container {
+            display: flex;
+            gap: 80px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product {
+            text-align: center;
+            width: 220px;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .image-box {
+            position: relative;
+            background-color: #e5e5e5;
+            border-radius: 10px;
+            padding: 20px;
+            width: 220px;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .image-box img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+        }
+
+        .best-seller {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #e9001a;
+            color: white;
+            padding: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        h3, p, .rating {
+            margin: 5px 0;
+        }
+
+        .product button {
+            border: 1px solid white;
+            background: transparent;
+            color: white;
+            padding: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 250px;
+        }
+
+        .product button:hover {
+            background: white;
+            color: black;
+            padding: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 250px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .carousel-btn.left {
+            left: 10px;
+        }
+
+        .carousel-btn.right {
+            right: 10px;
+        }
+
+        /* Responsif untuk tampilan mobile */
+        @media (max-width: 768px) {
+            .carousel {
+                padding: 10px;
+            }
+            .carousel-container {
+                transform: none;
+            }
+            .product {
+                width: 150px;
+                flex: 0 0 100%;
+            }
+            .image-box {
+                width: 150px;
+                height: auto;
+            }
+            .carousel-btn {
+                padding: 8px;
+            }
+            button {
+                width: 200px;
+                padding: 8px;
+                background-color: transparent;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .carousel {
+                padding: 10px;
+            }
+            .carousel-container {
+                transform: none;
+            }
+            .product {
+                width: 200px;
+                flex: 0 0 100%;
+            }
+            .image-box {
+                width: 200px;
+                height: auto;
+            }
+            .carousel-btn {
+                padding: 8px;
+            }
+            button {
+                width: 200px;
+                padding: 8px;
+                background-color: transparent;
+            }
+        }
+
+        .rating {
+            color: orange;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .footer {
+            margin-top: 100px;
+            background-color: black;
+            color: white;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            height: 500px;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo img {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin: 5px 0;
+        }
+
+        .footer-column ul li a {
+            color: gray;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid gray;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: gray;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .payment-methods img {
+            width: 50px;
+            margin: 5px;
+        }
+
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .chat-button button {
+            background-color: #e9001a;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="#"><img src="img/logochery.png" class="logo"></a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="products.html">Produk</a>
+                <a href="contact.html">Kontak</a>
+            </nav>
+            <div class="menu-toggle">&#9776;</div>
+        </div>
+    </header>
+    <h1>CHERY GRESIK</h1>
+    <p>Dapatkan Mobil Chery Impianmu Sekarang</p>
+    <div class="hero">
+    </div>
+    <div class="top-sellers">
+        <h2>Produk Terlaris</h2>
+        <div class="carousel-wrapper">
+            <button class="carousel-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="product">
+                        <div class="image-box">
+                            <img src="img/omoda5gt.webp" alt="Omoda 5 GT">
+                        </div>
+                        <h3>Omoda 5 GT</h3>
+                        <p>Mulai Rp 468.800.000</p>
+                        <a href="products.html"><button>Info Produk</button></a>
+                    </div>
+                    <div class="product">
+                        <div class="image-box">
+                            <img src="img/omodae5.webp" alt="Omoda E5">
+                        </div>
+                        <h3>Omoda E5</h3>
+                        <p>Mulai Rp 515.500.000</p>
+                        <a href="products.html"><button>Info Produk</button></a>
+                    </div>
+                    <div class="product">
+                        <div class="image-box">
+                            <img src="img/tiggo7pro.webp" alt="Tiggo 7 Pro">
+                        </div>
+                        <h3>Tiggo 7 Pro</h3>
+                        <p>Mulai Rp 416.000.000</p>
+                        <a href="products.html"><button>Info Produk</button></a>
+                    </div>
+                    <div class="product">
+                        <div class="image-box">
+                            <img src="img/newtiggo8.png" alt="New Tiggo 8">
+                        </div>
+                        <h3>New Tiggo 8</h3>
+                        <p>Mulai Rp 367.000.000</p>
+                        <a href="products.html"><button>Info Produk</button></a>
+                    </div>
+                    <div class="product">
+                        <div class="image-box">
+                            <img src="img/tiggo8promax.png" alt="Tiggo 8 Pro Max">
+                        </div>
+                        <h3>Tiggo 8 Pro Max</h3>
+                        <p>Mulai Rp 588.000.000</p>
+                        <a href="products.html"><button>Info Produk</button></a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn right" onclick="scrollCarousel(1)">&#10095;</button>
+        </div>
+    </div>
+    <footer style="background-color: #1f1f1f; color: #dee5ec; padding: 20px 0; text-align: center; font-family: Arial, sans-serif;">
+        <div style="max-width: 1200px; margin: auto; padding: 0 20px;">
+            <h2 style="color: #dee5ec; margin-bottom: 10px;">Chery Gresik<br></h2>
+    
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 20px; color: #dee5ec;">
+                <div style="flex: 1; min-width: 200px; margin: 10px 0;">
+                    <h3 style="color: #dee5ec; font-size: 16px; border-bottom: 2px solid #e9001a; padding-bottom: 5px; display: inline-block;">Kontak Kami</h3>
+                    <p style="margin: 5px 0; color: #7e8790;">Telephone: <a href="tel:+628123500904" style="color: #dee5ec; text-decoration: none;">+62 812 3500 904</a></p>
+                    <p style="margin: 5px 0; color: #7e8790;">Email: <a href="mailto:cherygresik@gmail.com" style="color: #dee5ec; text-decoration: none;">cherygresik@gmail.com</a></p>
+                    <p style="margin: 5px 0; color: #7e8790;">WhatsApp: <a href="https://wa.me/+628123500904" style="color: #dee5ec; text-decoration: none;">+62 812 3500 904</a></p>
+                </div>
+    
+                <div style="flex: 1; min-width: 200px; margin: 10px 0;">
+                    <h3 style="color: #dee5ec; font-size: 16px; border-bottom: 2px solid #e9001a; padding-bottom: 5px; display: inline-block;">Lokasi Dealer</h3>
+                    <p style="margin: 5px 0; color: #7e8790;">
+                        <a href="https://www.google.com/maps?q=Icon+Mall+Gresik,+Dr.+Wahidin+Sudirohusodo+No.788,+Kembangan,+Dahanrejo,+Kec.+Kebomas,+Kabupaten+Gresik,+Jawa+Timur+61161" 
+                           target="_blank" 
+                           style="color: #dee5ec; text-decoration: none;">
+                           📍 Icon Mall Gresik<br>
+                           Dr. Wahidin Sudirohusodo No.788, Kembangan, Dahanrejo, Kec. Kebomas, Kabupaten Gresik, Jawa Timur 61161
+                        </a>
+                    </p>  
+                    <p style="margin: 5px 0; color: #7e8790;">Senin - Minggu: 10.00 - 22.00</p>
+                </div>
+    
+                <div style="flex: 1; min-width: 200px; margin: 10px 0;">
+                    <h3 style="color: #dee5ec; font-size: 16px; border-bottom: 2px solid #e9001a; padding-bottom: 5px; display: inline-block;">Media Sosial</h3>
+                    <p style="margin: 5px 0;">
+                        <a href="https://www.facebook.com/cherygresik" style="color: #dee5ec; text-decoration: none; margin: 0 5px;">Facebook</a> |
+                        <a href="https://www.instagram.com/cherygresik" style="color: #dee5ec; text-decoration: none; margin: 0 5px;">Instagram</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p style="font-size: 15px; color: #7e8790;">&copy; 2025 Chery Gresik. All rights reserved.</p>
+            </div>
+            <div class="chat-button">
+                <a href="https://wa.me/628123500904?text=Saya%20ingin%20mendapatkan%20informasi%20mengenai%20mobil%20Chery" target="whatsapp">
+                    <button>💬</button>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.querySelector(".menu-toggle").addEventListener("click", function() {
+            document.querySelector("nav").classList.toggle("active");
+        });
+
+        function scrollCarousel(direction) {
+    const carousel = document.querySelector('.carousel');
+    const products = document.querySelectorAll('.product');
+
+    // Ambil ukuran produk + jarak antar produk (gap dari CSS)
+    const productWidth = products[0].offsetWidth + parseInt(getComputedStyle(carousel).gap || 20); 
+
+    // Ambil lebar carousel
+    const carouselWidth = carousel.offsetWidth;
+
+    // Tentukan produk yang saat ini berada di tengah
+    let currentIndex = Math.round((carousel.scrollLeft + (carouselWidth / 2)) / productWidth);
+
+    // Update ke produk berikutnya
+    currentIndex += direction;
+
+    // **Pastikan indeks tetap dalam batas array**
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex >= products.length) currentIndex = products.length - 1;
+
+    // **Jika kembali ke index 0, pastikan scrollLeft = 0**
+    if (currentIndex === 0) {
+        carousel.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+        // Hitung posisi baru agar produk benar-benar di tengah
+        const productCenter = products[currentIndex].offsetLeft + (products[currentIndex].offsetWidth / 2);
+        const newScrollLeft = productCenter - (carouselWidth / 2);
+
+        // Lakukan scroll dengan animasi smooth
+        carousel.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
+    }
+
+    console.log("Current Index:", currentIndex);
+    console.log("New Scroll Position:", carousel.scrollLeft);
+}
+
+    </script>
+</body>
+</html>
